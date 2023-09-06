@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private Enemy _enemyPrefab;
+    [SerializeField] private Enemy _prefab;
     [SerializeField] private Transform _spawnsEnemy;
     [SerializeField] private Transform _movePoint;
     [SerializeField] private float _spawnTime;
+    [SerializeField] private int _countEnemy;
 
-    private float _delayTime = 0;
     private Transform[] _spawnPoints;
 
     private void Start()
@@ -21,18 +21,23 @@ public class EnemySpawner : MonoBehaviour
         {
             _spawnPoints[i] = _spawnsEnemy.GetChild(i);
         }
+
+        StartCoroutine(SpawnsEnemy(_spawnTime));
     }
 
-    private void Update()
-    {
-        _delayTime += Time.deltaTime;
 
-        if (_delayTime >= _spawnTime)
+    private IEnumerator SpawnsEnemy(float duration)
+    {
+        for (int i = 0; i < _countEnemy; i++)
         {
+            var wait = new WaitForSeconds(duration);
+
             int spawnPointNumber = Random.Range(0, _spawnPoints.Length);
-            Enemy enemy = Instantiate(_enemyPrefab, _spawnPoints[spawnPointNumber]);
+
+            Enemy enemy = Instantiate(_prefab, _spawnPoints[spawnPointNumber]);
             enemy.SetTarget(_movePoint);
-            _delayTime = 0;
+
+            yield return wait;
         }
     }
 }
