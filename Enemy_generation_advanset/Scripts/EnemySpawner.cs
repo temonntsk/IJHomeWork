@@ -16,13 +16,15 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator SpawnEnemys(float duration)
     {
+        var wait = new WaitForSeconds(duration);
+
         for (int i = 0; i < _countEnemy; i++)
         {
             int spawnPointNumber = Random.Range(0, _spawnPoints.Length);
-        
+
             _spawnPoints[spawnPointNumber].CreateEnemy();
 
-            yield return new WaitForSeconds(duration);
+            yield return wait;
         }
     }
 }
