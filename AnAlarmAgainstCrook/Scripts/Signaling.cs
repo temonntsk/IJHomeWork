@@ -24,7 +24,7 @@ public class Signaling : MonoBehaviour
         _detector.Reached -= Play;
     }
 
-    public void Play(bool isPlaying)
+    private void Play(bool isPlaying)
     {
         if (isPlaying)
             SignalingStart();
@@ -32,7 +32,7 @@ public class Signaling : MonoBehaviour
             SignalingStop();
     }
 
-    public void SignalingStart()
+    private void SignalingStart()
     {
         StopCoroutineChangeVolume();
 
@@ -41,7 +41,7 @@ public class Signaling : MonoBehaviour
         _changeVolumeSound = StartCoroutine(ChangeVolume(_volumeStep, _increase));
     }
 
-    public void SignalingStop()
+    private void SignalingStop()
     {
         StopCoroutineChangeVolume();
 
