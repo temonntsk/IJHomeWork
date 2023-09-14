@@ -2,21 +2,68 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Signaling : MonoBehaviour
 {
-     public event Action<bool> Reached;
+    [SerializeField] private Detector _detector;
+    [SerializeField] private AudioSource _soundSigaling;
+    [SerializeField] private float _volumeStep;
 
-    private void OnTriggerEnter(Collider collision)
+    private float _increase = 1;
+    private float _decrease = 0;
+    private float _volumeZero = 0;
+    private Coroutine _changeVolumeSound;
+
+    private void OnEnable()
     {
-        if (collision.TryGetComponent<Player>(out Player player))
-            Reached.Invoke(true);
+        _detector.Reached += Play;
     }
 
-    private void OnTriggerExit(Collider collision)
+    private void OnDisable()
     {
-        if (collision.TryGetComponent<Player>(out Player player))
-            Reached.Invoke(false);
+        _detector.Reached -= Play;
+    }
+
+    public void Play(bool isPlaying)
+    {
+        if (isPlaying)
+            SignalingStart();
+        else
+            SignalingStop();
+    }
+
+    public void SignalingStart()
+    {
+        StopCoroutineChangeVolume();
+
+        _soundSigaling.volume = _volumeZero;
+        _soundSigaling.Play();
+        _changeVolumeSound = StartCoroutine(ChangeVolume(_volumeStep, _increase));
+    }
+
+    public void SignalingStop()
+    {
+        StopCoroutineChangeVolume();
+
+        _changeVolumeSound = StartCoroutine(ChangeVolume(_volumeStep, _decrease));
+
+        if (_soundSigaling.volume == _volumeZero)
+            _soundSigaling.Stop();
+    }
+
+    private void StopCoroutineChangeVolume()
+    {
+        if (_changeVolumeSound != null)
+            StopCoroutine(_changeVolumeSound);
+    }
+
+    private IEnumerator ChangeVolume(float step, float target)
+    {
+        while (Mathf.Abs(_soundSigaling.volume - target) > Mathf.Epsilon)
+        {
+            _soundSigaling.volume = Mathf.MoveTowards(_soundSigaling.volume, target, step * Time.deltaTime);
+
+            yield return null;
+        }
     }
 }
