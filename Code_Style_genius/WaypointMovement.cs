@@ -10,7 +10,7 @@ public class WaypointMovement : MonoBehaviour
     private Transform[] _points;
     private int _currentPoint;
 
-    void Start()
+    private void Start()
     {
         _points = new Transform[_place.childCount];
 
@@ -18,7 +18,7 @@ public class WaypointMovement : MonoBehaviour
             _points[i] = _place.GetChild(i);
     }
 
-    public void Update()
+    private void Update()
     {
         Transform target = _points[_currentPoint];
 
@@ -27,7 +27,7 @@ public class WaypointMovement : MonoBehaviour
         if (transform.position == target.position)
             GetNextTargetPoint();
     }
-    public Vector3 GetNextTargetPoint()
+    private Vector3 GetNextTargetPoint()
     {
         _currentPoint++;
 
@@ -36,7 +36,7 @@ public class WaypointMovement : MonoBehaviour
 
         var targetPoint = _points[_currentPoint].transform.position;
         transform.forward = targetPoint - transform.position;
-
+        
         return targetPoint;
     }
 }

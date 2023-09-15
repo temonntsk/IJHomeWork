@@ -10,12 +10,12 @@ public class BulletsShooting : MonoBehaviour
     [SerializeField] private Rigidbody _prefab;
     [SerializeField] private Transform _target;
 
-    void Start()
+    private void Start()
     {
         StartCoroutine(Shoot());
     }
 
-    IEnumerator Shoot()
+    private IEnumerator Shoot()
     {
         bool isWork = true;
         var wait = new WaitForSeconds(_shootingTime);
