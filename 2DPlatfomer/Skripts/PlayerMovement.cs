@@ -4,58 +4,61 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
+[RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
 
 public class PlayerMovement : MonoBehaviour
 {
+    private readonly int MoveX = Animator.StringToHash(nameof(MoveX));
+    private readonly int Jump = Animator.StringToHash(nameof(Jump));
+
     [SerializeField] private float _speed;
     [SerializeField] private float _jumpForce;
     [SerializeField] private GroundCheck _groundCheck;
 
     private Animator _animator;
     private Rigidbody2D _player;
+    private SpriteRenderer _spriteRenderer;
     private Vector2 _moveVector;
-    private bool _isFaceRight = false;
     private bool _isJumping = false;
 
     private void Start()
     {
         _animator = GetComponent<Animator>();
         _player = GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
     {
-        PressedButton();
+        ObtainActionButtonIsPressed();
     }
 
     private void FixedUpdate()
     {
-        Jump();
+        JumpFromGround();
         Run();
     }
 
-    private void Jump()
+    private void JumpFromGround()
     {
-        if (_isJumping && _groundCheck.onGround)
+        if (_isJumping && _groundCheck.OnGround)
         {
             _player.velocity = new Vector2(_player.velocity.x, _jumpForce);
-            _animator.SetTrigger("Jump");
+            _animator.SetTrigger(Jump);
             _isJumping = false;
         }
     }
 
     private void Run()
     {
-        
-        _animator.SetFloat("MoveX", Mathf.Abs(_moveVector.x));
+        _animator.SetFloat(MoveX, Mathf.Abs(_moveVector.x));
         _player.velocity = new Vector2(_speed * _moveVector.x, _player.velocity.y);
-
         Reflect();
     }
 
-    private void PressedButton()
+    private void ObtainActionButtonIsPressed()
     {
         if (Input.GetKeyDown(KeyCode.Space))
             _isJumping = !_isJumping;
@@ -65,10 +68,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Reflect()
     {
-        if ((_moveVector.x > 0 && _isFaceRight == false) || (_moveVector.x < 0 && _isFaceRight == true))
-        {
-            transform.localScale *= new Vector2(-1, 1);
-            _isFaceRight = !_isFaceRight;
-        }
+        if (_moveVector.x > 0)
+            _spriteRenderer.flipX = true;
+        else
+            _spriteRenderer.flipX = false;
     }
 }

@@ -8,17 +8,14 @@ public class CoinSpawner : MonoBehaviour
 {
     [SerializeField] private Coin _coin;
 
-    private Transform _point;
     private Transform[] _points;
 
     private void Start()
     {
-        _point = GetComponent<Transform>();
+        _points = new Transform[transform.childCount];
 
-        _points = new Transform[_point.childCount];
-
-        for (int i = 0; i < _point.childCount; i++)
-            _points[i] = _point.GetChild(i).transform;
+        for (int i = 0; i < transform.childCount; i++)
+            _points[i] = transform.GetChild(i).transform;
 
         Spawn();
     }

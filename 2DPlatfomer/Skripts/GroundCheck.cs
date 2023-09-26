@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class GroundCheck : MonoBehaviour
 {
-    public bool onGround;
+    public bool OnGround { get; private set; } 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent<Ground>(out Ground ground))
-            onGround = true;
+            OnGround = true;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.TryGetComponent<Ground>(out Ground ground))
-            onGround = false;
+            OnGround = false;
     }
 
 }

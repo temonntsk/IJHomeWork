@@ -4,32 +4,36 @@ using System.Transactions;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(SpriteRenderer))]
 
 public class EnemyMovement : MonoBehaviour
 {
+    private readonly int MoveX = Animator.StringToHash(nameof(MoveX));
+
     [SerializeField] private float _speed;
 
     private PivotPointChecker _pivotPointChecker;
     private Vector2 _moveVector = new Vector2(-1, 1);
-    private bool _isFaceRight = false;
     private Animator _animator;
+    private SpriteRenderer _spriteRenderer;
 
     private void Awake()
     {
         _pivotPointChecker = GetComponentInChildren<PivotPointChecker>();
         _animator = GetComponent<Animator>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void FixedUpdate()
     {
         GetDirections();
         transform.Translate(new Vector3(_moveVector.x, 0, 0) * _speed * Time.deltaTime);
-        _animator.SetFloat("MoveX", Mathf.Abs(_moveVector.x));
+        _animator.SetFloat(MoveX, Mathf.Abs(_moveVector.x));
     }
 
     private void GetDirections()
     {
-        if (_pivotPointChecker.IsPivotPoint)
+        if (_pivotPointChecker.IsReached)
         {
             _moveVector *= new Vector2(-1, 1);
             Reflect();
@@ -38,10 +42,9 @@ public class EnemyMovement : MonoBehaviour
 
     private void Reflect()
     {
-        if ((_moveVector.x > 0 && _isFaceRight == false) || (_moveVector.x < 0 && _isFaceRight == true))
-        {
-            transform.localScale *= new Vector2(-1, 1);
-            _isFaceRight = !_isFaceRight;
-        }
+        if (_moveVector.x > 0)
+            _spriteRenderer.flipX = true;
+        else
+            _spriteRenderer.flipX = false;
     }
 }
