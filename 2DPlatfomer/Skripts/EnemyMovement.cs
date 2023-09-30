@@ -42,9 +42,6 @@ public class EnemyMovement : MonoBehaviour
 
     private void Reflect()
     {
-        if (_moveVector.x > 0)
-            _spriteRenderer.flipX = true;
-        else
-            _spriteRenderer.flipX = false;
+        _spriteRenderer.flipX = _moveVector.x > 0;
     }
 }

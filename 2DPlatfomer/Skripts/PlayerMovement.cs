@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        ObtainActionButtonIsPressed();
+        ButtonPressReader();
     }
 
     private void FixedUpdate()
@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
         Reflect();
     }
 
-    private void ObtainActionButtonIsPressed()
+    private void ButtonPressReader()
     {
         if (Input.GetKeyDown(KeyCode.Space))
             _isJumping = !_isJumping;
@@ -68,9 +68,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Reflect()
     {
-        if (_moveVector.x > 0)
-            _spriteRenderer.flipX = true;
-        else
-            _spriteRenderer.flipX = false;
+        _spriteRenderer.flipX = _moveVector.x > 0;
     }
 }
