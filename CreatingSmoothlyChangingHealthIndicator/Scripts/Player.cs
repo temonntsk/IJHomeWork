@@ -7,22 +7,21 @@ using UnityEngine.Events;
 public class Player : MonoBehaviour
 {
     [SerializeField] private int _maxHealth;
-    [SerializeField] private int _minHealth;
     [SerializeField] private int _health;
+
+    private int _minHealth = 0;
 
     public int MaxHealth => _maxHealth;
     public int MinHealth => _minHealth;
 
-
-    public Action<int> HealthChanged;
+    public event Action<int> HealthChanged;
 
     public void TakeDamage(int damage)
     {
         _health -= damage;
         HealthChanged?.Invoke(_health);
 
-        if (_health - damage < _minHealth)
-            _health = _minHealth;
+        _health = Mathf.Clamp((_health - damage), _minHealth, _maxHealth);
     }
 
     public void TakeHeal(int heal)
@@ -30,7 +29,6 @@ public class Player : MonoBehaviour
         _health += heal;
         HealthChanged?.Invoke(_health);
 
-        if (_health + heal > _maxHealth)
-            _health = _maxHealth;
+        _health = Mathf.Clamp((_health + heal), _minHealth, _maxHealth);
     }
 }

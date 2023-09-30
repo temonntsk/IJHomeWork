@@ -12,6 +12,7 @@ public class Bar : MonoBehaviour
     [SerializeField] private Player _player;
 
     private Slider _slider;
+    private Coroutine _changeValueHealth;
 
     private void Start()
     {
@@ -32,12 +33,10 @@ public class Bar : MonoBehaviour
 
     public void ChangeValue(int health)
     {
-        if (health > _player.MaxHealth)
-            health = _player.MaxHealth;
-        else if (health < _player.MinHealth)
-            health = _player.MinHealth;
+        health = Mathf.Clamp(health, _player.MinHealth, _player.MaxHealth);
 
-        StartCoroutine(MoveSlider(_step, health));
+        StopCoroutineChangeValue();
+        _changeValueHealth = StartCoroutine(MoveSlider(_step, health));
     }
 
     private IEnumerator MoveSlider(float stepValue, int health)
@@ -48,5 +47,11 @@ public class Bar : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    private void StopCoroutineChangeValue()
+    {
+        if (_changeValueHealth != null)
+            StopCoroutine(_changeValueHealth);
     }
 }
