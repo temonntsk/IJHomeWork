@@ -9,6 +9,7 @@ using DG.Tweening;
 public class TextChanger : MonoBehaviour
 {
     private Text _text;
+    private float _duration = 2f;
 
     private void Start()
     {
@@ -16,8 +17,8 @@ public class TextChanger : MonoBehaviour
 
         Sequence sequence = DOTween.Sequence();
 
-        sequence.Append(_text.DOText("Замена текста", 2));
-        sequence.Append(_text.DOText(" Дополнение текста", 2).SetRelative());
-        sequence.Append(_text.DOText("Смена текста", 2, true, ScrambleMode.All));       
+        sequence.Append(_text.DOText("Замена текста", _duration));
+        sequence.Append(_text.DOText(" Дополнение текста", _duration).SetRelative());
+        sequence.Append(_text.DOText("Смена текста", _duration, true, ScrambleMode.All));       
     }
 }

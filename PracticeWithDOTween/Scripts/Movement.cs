@@ -5,8 +5,11 @@ using DG.Tweening;
 
 public class Movement : MonoBehaviour
 {
+    private float _duration = 30f;
+    private float _targetPosition = 30f;
+
     private void Start()
     {
-        transform.DOMoveZ(50, 30);
+        transform.DOMoveZ(_targetPosition, _duration);
     }
 }
