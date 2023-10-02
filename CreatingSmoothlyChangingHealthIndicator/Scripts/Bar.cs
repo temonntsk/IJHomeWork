@@ -33,9 +33,7 @@ public class Bar : MonoBehaviour
 
     public void ChangeValue(int health)
     {
-        health = Mathf.Clamp(health, _player.MinHealth, _player.MaxHealth);
-
-        StopCoroutineChangeValue();
+        StopingChangeValue();
         _changeValueHealth = StartCoroutine(MoveSlider(_step, health));
     }
 
@@ -49,7 +47,7 @@ public class Bar : MonoBehaviour
         }
     }
 
-    private void StopCoroutineChangeValue()
+    private void StopingChangeValue()
     {
         if (_changeValueHealth != null)
             StopCoroutine(_changeValueHealth);
