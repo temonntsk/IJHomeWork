@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float _speed;
     [SerializeField] private float _jumpForce;
-    [SerializeField] private GroundCheck _groundCheck;
+    [SerializeField] private GroundChecker _groundCheck;
 
     private Animator _animator;
     private Rigidbody2D _player;
