@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyChecker : MonoBehaviour
+public class EnemyDetector : MonoBehaviour
 {
     public EnemyHealth Enemy { get; private set; }
     

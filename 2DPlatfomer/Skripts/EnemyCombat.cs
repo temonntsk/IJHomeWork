@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class EnemyCombat : HumanCombat
 {
-    private PlayerChecker _playerChecker;
+    private PlayerDetector _playerChecker;
     private EnemyHealth _enemyHealth;
 
     protected override void Start()
     {
         base.Start();
-        _playerChecker = GetComponentInChildren<PlayerChecker>();
+        _playerChecker = GetComponentInChildren<PlayerDetector>();
         _enemyHealth = GetComponent<EnemyHealth>();
     }
 

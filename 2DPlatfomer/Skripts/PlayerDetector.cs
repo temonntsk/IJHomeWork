@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerChecker : MonoBehaviour
+public class PlayerDetector : MonoBehaviour
 {
     public PlayerHealth Player { get; private set; }
 

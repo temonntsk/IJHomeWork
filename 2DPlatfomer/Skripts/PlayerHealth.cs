@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +8,6 @@ public class PlayerHealth : HumanHealth
 {
     public void TakeHeal(int heal)
     {
-        _isThatDamage = false;
-        CheckingHealth(heal, _isThatDamage);
+        Health = Mathf.Clamp((Health + heal), MinHealth, MaxHealth);
     }
 }
