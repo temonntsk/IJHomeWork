@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,33 +10,30 @@ public class Spawner : ObjectPool
     [SerializeField] private float _secondsBetweenSpawn;
     [SerializeField] private Transform[] _spawnPoints;
 
-    private float _elapsedTime = 0;
-
     private void Start()
     {
         Initialize(_enemyPrefabs, _aidKitPrefab);
-    }
-
-    private void Update()
-    {
-        _elapsedTime += Time.deltaTime;
-
-        if (_elapsedTime >= _secondsBetweenSpawn)
-        {
-            if (TryGetObject(out GameObject enemy))
-            {
-                _elapsedTime = 0;
-                int spawnPointNumber = UnityEngine.Random.Range(0, _spawnPoints.Length);
-
-                SetEnemy(enemy, _spawnPoints[spawnPointNumber].position);
-            }
-        }
+        StartCoroutine(SpawnEnemys());
     }
 
     private void SetEnemy(GameObject enemy, Vector3 spawnPoint)
     {
         enemy.SetActive(true);
         enemy.transform.position = spawnPoint;
+    }
+
+    private IEnumerator SpawnEnemys()
+    {
+        var wait = new WaitForSeconds(_secondsBetweenSpawn);
+
+        while (TryGetObject(out GameObject enemy))
+        {
+            int spawnPointNumber = UnityEngine.Random.Range(0, _spawnPoints.Length);
+
+            SetEnemy(enemy, _spawnPoints[spawnPointNumber].position);
+
+            yield return wait;
+        }
     }
 
 }
