@@ -19,7 +19,7 @@ public class AttackState : State
 
     private void Update()
     {
-        if(_lastAttackTime<= 0)
+        if (_lastAttackTime <= 0)
         {
             Attack(Target);
             _lastAttackTime = _delay;

@@ -10,12 +10,12 @@ public abstract class State : MonoBehaviour
 
     public void Enter(Player target)
     {
-        if(enabled== false)
+        if (enabled == false)
         {
             Target = target;
             enabled = true;
 
-            foreach(var transition in _transitions)
+            foreach (var transition in _transitions)
             {
                 transition.enabled = true;
                 transition.Init(Target);
@@ -25,7 +25,7 @@ public abstract class State : MonoBehaviour
 
     public State GetNextState()
     {
-        foreach(var transition in _transitions)
+        foreach (var transition in _transitions)
         {
             if (transition.NeedTransit)
                 return transition.TargetState;
@@ -36,7 +36,7 @@ public abstract class State : MonoBehaviour
 
     public void Exit()
     {
-        if(enabled == true)
+        if (enabled == true)
         {
             foreach (var transition in _transitions)
                 transition.enabled = false;

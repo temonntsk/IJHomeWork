@@ -6,7 +6,7 @@ public class TargetDieTransition : Transition
 {
     private void Update()
     {
-        if(Target == null)
-            NeedTransit= true;
+        if (Target == null)
+            NeedTransit = true;
     }
 }

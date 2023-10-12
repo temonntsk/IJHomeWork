@@ -21,10 +21,10 @@ public class EnemyStateMachine : MonoBehaviour
     }
     private void Update()
     {
-        if (_currentState == null)        
+        if (_currentState == null)
             return;
-        
-        var nextState= _currentState.GetNextState();
+
+        var nextState = _currentState.GetNextState();
 
         if (nextState != null)
             Transit(nextState);
@@ -41,7 +41,7 @@ public class EnemyStateMachine : MonoBehaviour
 
     private void Transit(State nextState)
     {
-        if(_currentState != null)
+        if (_currentState != null)
             _currentState.Exit();
 
         _currentState = nextState;
