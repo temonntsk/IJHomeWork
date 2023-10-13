@@ -4,10 +4,10 @@ using UnityEngine;
 
 [System.Serializable]
 
-public class Wave 
+public class Wave
 {
     public Enemy Template;
     public float Delay;
-    public int  Count;
+    public int Count;
 
 }

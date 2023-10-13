@@ -23,10 +23,10 @@ public class NextWaveButton : MonoBehaviour
 
     private void OnAllEnemySpawned()
     {
-        _nextWaveButton.gameObject.SetActive(true);    
+        _nextWaveButton.gameObject.SetActive(true);
     }
 
-    public void OnNextWaveButtonClick() 
+    public void OnNextWaveButtonClick()
     {
         _spawner.NextWave();
         _nextWaveButton.gameObject.SetActive(false);

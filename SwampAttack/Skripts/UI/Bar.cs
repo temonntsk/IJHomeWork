@@ -10,5 +10,5 @@ public class Bar : MonoBehaviour
     public void OnValueChanged(int value, int maxValue)
     {
         BarSlider.value = (float)value / maxValue;
-    } 
+    }
 }

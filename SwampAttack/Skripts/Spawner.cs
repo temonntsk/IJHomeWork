@@ -34,7 +34,7 @@ public class Spawner : MonoBehaviour
             InstantiateEnemy();
             _spawned++;
             _timeAfterLastSpawn = 0;
-            EnemyCountChanged?.Invoke(_spawned,_currentWawe.Count);
+            EnemyCountChanged?.Invoke(_spawned, _currentWawe.Count);
         }
 
         if (_currentWawe.Count <= _spawned)
