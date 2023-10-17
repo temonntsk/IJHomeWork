@@ -2,23 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class DuckBullet : MonoBehaviour
 {
     [SerializeField] private float _speed;
 
-    private Vector3 _direction;
-    private Quaternion _rotation;
+    private Duck _duck;
 
     private void Update()
     {
-        transform.Translate(_direction * _speed * Time.deltaTime, Space.World);
-        transform.localRotation = _rotation;
+        transform.Translate(transform.right * _speed * Time.deltaTime, Space.Self);
     }
 
-    public void Init(Vector3 direction, Quaternion rotation)
+    public void Init(Duck duck)
     {
-        _direction = direction;
-        _rotation = rotation;
+        _duck = duck;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -26,6 +23,7 @@ public class Bullet : MonoBehaviour
         if (collision.TryGetComponent(out Enemy enemy))
         {
             enemy.Die();
+            _duck.IncreaseScore();
             Destroy(gameObject);
         }
     }

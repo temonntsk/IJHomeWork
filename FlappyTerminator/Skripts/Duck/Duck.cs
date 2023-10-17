@@ -18,17 +18,17 @@ public class Duck : MonoBehaviour
         _mover = GetComponent<DuckMover>();
     }
 
-    public void ReserPlayer()
-    {
-        _score = 0;
-        ScoreChanged?.Invoke(_score);
-        _mover.ResetDuck();
-    }
-
     public void IncreaseScore()
     {
         _score++;
         ScoreChanged?.Invoke(_score);
+    }
+
+    public void ResetPlayer()
+    {
+        _score = 0;
+        ScoreChanged?.Invoke(_score);
+        _mover.ResetBird();
     }
 
     public void Die()

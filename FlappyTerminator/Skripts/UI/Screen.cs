@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,17 +19,9 @@ public abstract class Screen : MonoBehaviour
         Button.onClick.RemoveListener(OnButtonClick);
     }
 
-    public void Close()
-    {
-        CanvasGroup.alpha = 0;
-        Button.interactable = false;
-    }
-
-    public void Open()
-    {
-        CanvasGroup.alpha = 1;
-        Button.interactable = true;
-    }
-
     protected abstract void OnButtonClick();
+
+    public abstract void Open();
+
+    public abstract void Close();
 }

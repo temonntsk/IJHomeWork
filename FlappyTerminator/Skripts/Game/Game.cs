@@ -1,6 +1,6 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Game : MonoBehaviour
@@ -14,20 +14,20 @@ public class Game : MonoBehaviour
     {
         _startScreen.PlayButtonClick += OnPlayButtonClick;
         _gameOverScreen.RestartButtonClick += OnRestartButtonClick;
-        _duck.GameOver += OngGameOver;
+        _duck.GameOver += OnGameOver;
     }
 
     private void OnDisable()
     {
         _startScreen.PlayButtonClick -= OnPlayButtonClick;
         _gameOverScreen.RestartButtonClick -= OnRestartButtonClick;
-        _duck.GameOver -= OngGameOver;
+        _duck.GameOver -= OnGameOver;
     }
 
     private void Start()
     {
         Time.timeScale = 0;
-        _startScreen.Open();   
+        _startScreen.Open();
     }
 
     private void OnPlayButtonClick()
@@ -45,14 +45,13 @@ public class Game : MonoBehaviour
 
     private void StartGame()
     {
-        Time.timeScale = 1.0f;
-        _duck.ReserPlayer();
+        Time.timeScale = 1;
+        _duck.ResetPlayer();
     }
 
-    public void OngGameOver()
+    public void OnGameOver()
     {
         Time.timeScale = 0;
         _gameOverScreen.Open();
-
     }
 }
